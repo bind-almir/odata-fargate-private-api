@@ -245,19 +245,34 @@ Resources:
               Service: ec2.amazonaws.com
             Action: sts:AssumeRole
       Path: /
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore'
       Policies:
-        - PolicyName: SSMPolicy
+        - PolicyName: SSMAccessPolicy
           PolicyDocument:
             Version: '2012-10-17'
             Statement:
-              - Effect: Allow
-                Action:
-                  - ssm:SendCommand
-                  - ssm:ListCommands
-                  - ssm:DescribeInstanceInformation
-                  - ssm:GetCommandInvocation
-                  - ssm:ListCommandInvocations
-                Resource: "*"
+            - Effect: Allow
+              Action:
+                - ssm:*
+                - ec2messages:*
+                - ssm:DescribeInstanceInformation
+              Resource: '*'
+            - Effect: Allow
+              Action:
+                - 'ssmmessages:CreateControlChannel'
+                - 'ssmmessages:CreateDataChannel'
+                - 'ssmmessages:OpenControlChannel'  
+                - 'ssmmessages:OpenDataChannel'
+              Resource: '*'
+            - Effect: Allow
+              Action: 
+                - 's3:GetEncryptionConfiguration'
+              Resource: '*'
+            - Effect: Allow
+              Action:
+                - 'kms:Decrypt'
+              Resource: '*'
         - PolicyName: SecretsManagerPolicy
           PolicyDocument:
             Version: '2012-10-17'
