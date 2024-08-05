@@ -71,6 +71,14 @@ To delete the stack, run the following command:
 aws cloudformation delete-stack --stack-name odata-stack --region us-east-1
 ```
 
+## About CDK stack
+
+This is just an experiment. The stack is not tested, use it on your own risk. It is automatically generated using the CDK migration tool.
+
+```bash
+cdk migrate --language typescript --from-path "./deploy.yaml" --stack-name "CDK"
+```
+
 ## License
 
 This project is licensed under the MIT License. 
