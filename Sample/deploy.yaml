@@ -703,18 +703,21 @@ Resources:
         ConnectionId: !Ref VPCLink
         IntegrationHttpMethod: ANY
         Type: HTTP_PROXY
-        Uri: !Sub
-          - http://${NLB.DNSName}/odata
-          - { NLB: !Ref NLB }
+        Uri: !Sub 'http://${NLB.DNSName}/odata'
+
 
   ApiGatewayAuthorizer:
     Type: AWS::ApiGateway::Authorizer
     Properties:
       Name: Authorizer
       Type: TOKEN
-      AuthorizerUri: !Sub
-        - arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${AuthorizerLambda.Arn}/invocations
-        - { AuthorizerLambda: !Ref AuthorizerLambda }
+      AuthorizerUri: !Join 
+        - ''
+        - - 'arn:aws:apigateway:'
+          - !Ref 'AWS::Region'
+          - ':lambda:path/2015-03-31/functions/'
+          - !GetAtt AuthorizerLambda.Arn
+          - /invocations
       IdentitySource: method.request.header.Authorization
       RestApiId: !Ref ApiGatewayRestApi
 
