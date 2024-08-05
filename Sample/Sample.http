@@ -1,0 +1,6 @@
+@Sample_HostAddress = http://localhost:5042
+
+GET {{Sample_HostAddress}}/customers/
+Accept: application/json
+
+###
