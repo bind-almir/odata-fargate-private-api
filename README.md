@@ -25,6 +25,12 @@ Use `stack-params.json` to provide the necessary parameters for the CloudFormati
 
 This file is not included in the repository because it contains sensitive information.
 
+If making any changes, make sure to validate the CloudFormation template before deploying it:
+
+```bash
+aws cloudformation validate-template --template-body file://deploy.yaml --region us-east-1
+```
+
 To deploy the stack, run the following commands:
 
 ```bash

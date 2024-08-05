@@ -278,10 +278,13 @@ Resources:
     Properties:
       InstanceType: t2.micro
       ImageId: ami-0b72821e2f351e396
-      SubnetId: !Ref PrivateSubnet1
-      SecurityGroupIds:
-        - !Ref BastionSecurityGroup
       IamInstanceProfile: !Ref BastionHostInstanceProfile
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: false
+          DeviceIndex: '0'
+          GroupSet:
+            - !Ref BastionSecurityGroup
+          SubnetId: !Ref PrivateSubnet1
       Tags:
         - Key: Name
           Value: BastionHost
@@ -710,9 +713,6 @@ Outputs:
   PrivateSubnet2Id:
     Description: The second private subnet ID
     Value: !Ref PrivateSubnet2
-  BastionHostPublicIP:
-    Description: The public IP of the Bastion host
-    Value: !GetAtt BastionHost.PublicIp
   RDSInstanceEndpoint:
     Description: The endpoint of the RDS instance
     Value: !GetAtt RDSMySQL.Endpoint.Address
